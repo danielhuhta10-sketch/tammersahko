@@ -1,0 +1,267 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Check, Bolt, Phone, Mail, Shield, Leaf, Sun, PlugZap, Clock } from "lucide-react";
+
+// TammerSähkö — vaaleansininen teema (React + Tailwind + shadcn/ui)
+
+const badges = [
+  { label: "S2-pätevyys" },
+  { label: "FISE/SETI-rekisteröinti" },
+  { label: "24/7 vikapäivystys" },
+  { label: "Valttikortti", check: true },
+  { label: "Vastuuvakuutus", check: true },
+  { label: "Työturvallisuuskortti", check: true },
+  { label: "Kotitalousvähennys", check: true },
+];
+
+const services = [
+  {
+    icon: <Bolt className="w-6 h-6" aria-hidden />,
+    title: "Sähköasennukset",
+    desc: "Uudis- ja saneerauskohteet, keittiö- ja kylpyhuoneremontit, valaisimet, pistorasiat ja keskukset.",
+  },
+  {
+    icon: <Clock className="w-6 h-6" aria-hidden />,
+    title: "Vikakorjaukset 24/7",
+    desc: "Nopea vikapäivystys. Turvallinen vianhaku ja korjaus – dokumentoitu.",
+  },
+  {
+    icon: <PlugZap className="w-6 h-6" aria-hidden />,
+    title: "Latauspisteet",
+    desc: "Sähköauton kotilataus ja taloyhtiöiden latausjärjestelmät avaimet käteen.",
+  },
+  {
+    icon: <Sun className="w-6 h-6" aria-hidden />,
+    title: "Aurinkosähkö",
+    desc: "Mitoitus, asennus ja käyttöönotto – pientaloista yrityskohteisiin.",
+  },
+  {
+    icon: <Shield className="w-6 h-6" aria-hidden />,
+    title: "Talotekniikan huollot",
+    desc: "Kausihuollot, lämpökaapeloinnit, vikavirtasuojat ja valaistuksen modernisointi.",
+  },
+  {
+    icon: <Leaf className="w-6 h-6" aria-hidden />,
+    title: "Sähkötarkastukset",
+    desc: "Käyttöönottotarkastukset, mittaukset ja pöytäkirjat lakisääteisesti.",
+  },
+];
+
+export default function TammerSahko() {
+  const [sending, setSending] = useState(false);
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSending(true);
+    setTimeout(() => setSending(false), 1200);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-sky-50 to-sky-100 text-slate-900">
+      {/* Header */}
+      <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-sky-50/70 border-b border-sky-200/60">
+        <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+          <a href="#" className="font-semibold text-xl tracking-tight text-sky-700">TammerSähkö</a>
+          <nav className="hidden md:flex gap-6 text-sm text-sky-800">
+            <a href="#palvelut" className="hover:underline">Palvelut</a>
+            <a href="#hinnasto" className="hover:underline">Hinnasto</a>
+            <a href="#yhteys" className="hover:underline">Yhteys</a>
+          </nav>
+          <div className="flex items-center gap-3">
+            <Button asChild variant="outline" className="border-sky-400 text-sky-700">
+              <a href="#tarjous">Pyydä tarjous</a>
+            </Button>
+            <Button asChild className="bg-sky-600 hover:bg-sky-700">
+              <a href="tel:+358407733705" aria-label="Soita päivystysnumeroon">
+                <Phone className="w-4 h-4 mr-2" /> 040 773 3705
+              </a>
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section className="relative">
+        <div className="mx-auto max-w-6xl px-4 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <motion.h1 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="text-3xl md:text-5xl font-bold leading-tight text-sky-800">
+              Sähköasennukset ajallaan ja siististi
+            </motion.h1>
+            <p className="mt-4 text-lg text-sky-700">
+              TammerSähkö hoitaa kodin, taloyhtiön ja yrityksen sähkötyöt nopeasti ja luotettavasti. Latauspisteet, aurinkosähkö, remontit, vikakorjaukset – avaimet käteen.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button asChild size="lg" className="bg-sky-600 hover:bg-sky-700">
+                <a href="#tarjous">Pyydä tarjous</a>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="border-sky-400 text-sky-700">
+                <a href="tel:+358407733705">Soita päivystysnumeroon</a>
+              </Button>
+            </div>
+            <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              {badges.map((b, i) => (
+                <Badge key={i} variant="secondary" className="justify-start gap-2 py-2 px-3 bg-sky-100 text-sky-800">
+                  {b.check ? <Check className="w-4 h-4" /> : null}
+                  {b.label}
+                </Badge>
+              ))}
+            </div>
+          </div>
+          <div className="md:pl-10">
+            <Card className="shadow-xl border-sky-200/70 bg-white/80">
+              <CardHeader>
+                <CardTitle className="text-sky-800">Kaikki sähkötyöt yhdeltä kumppanilta</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3 text-sky-700">
+                <p>
+                  Suunnittelusta käyttöönottoon ja dokumentointiin. Painotamme siistiä työnjälkeä, selkeää viestintää ja täsmällisiä aikatauluja.
+                </p>
+                <ul className="list-none space-y-2">
+                  <li className="flex items-start gap-2"><Check className="w-5 h-5 mt-0.5 text-sky-600"/>Avaimet käteen -toteutukset</li>
+                  <li className="flex items-start gap-2"><Check className="w-5 h-5 mt-0.5 text-sky-600"/>Dokumentoitu laadunvarmistus</li>
+                  <li className="flex items-start gap-2"><Check className="w-5 h-5 mt-0.5 text-sky-600"/>Takuu työnjäljelle ja tarvikkeille</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Palvelut */}
+      <section id="palvelut" className="mx-auto max-w-6xl px-4 py-16">
+        <div className="max-w-2xl">
+          <h2 className="text-2xl md:text-3xl font-semibold text-sky-800">Palvelut</h2>
+          <p className="mt-2 text-sky-700">Kaikki sähkötyöt yhdeltä kumppanilta – suunnittelusta käyttöönottoon ja dokumentointiin.</p>
+        </div>
+        <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((s, i) => (
+            <Card key={i} className="hover:shadow-lg transition-shadow border-sky-200/70 bg-white/80">
+              <CardHeader className="flex flex-row items-center gap-3">
+                {s.icon}
+                <CardTitle className="text-lg text-sky-800">{s.title}</CardTitle>
+              </CardHeader>
+              <CardContent className="text-sky-700">{s.desc}</CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Hinnasto */}
+      <section id="hinnasto" className="bg-sky-50 border-y border-sky-200/60">
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <div className="max-w-2xl">
+            <h2 className="text-2xl md:text-3xl font-semibold text-sky-800">Hinnasto</h2>
+            <p className="mt-2 text-sky-700">Selkeä tuntiveloitus ja eritellyt matkakulut.</p>
+          </div>
+          <div className="mt-8 grid md:grid-cols-2 gap-6">
+            <Card className="border-sky-200/70 bg-white/80">
+              <CardHeader>
+                <CardTitle className="text-sky-800">Työhinnat</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2 text-sky-700">
+                <p><strong>Tuntiveloitus:</strong> 45 € + alv</p>
+                <p><strong>Kilometrikorvaus:</strong> 0,88 € (alv 0%) / 1,1044 € (alv 25,5%)</p>
+              </CardContent>
+            </Card>
+            <Card className="border-sky-200/70 bg-white/80">
+              <CardHeader>
+                <CardTitle className="text-sky-800">Mitä sisältyy?</CardTitle>
+              </CardHeader>
+              <CardContent className="text-sky-700">
+                Reilu laskutus, dokumentointi ja selkeät raportit. Tarjouksessa erittelemme materiaalit ja työn osuuden läpinäkyvästi.
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Tarjouslomake & Yhteys */}
+      <section id="tarjous" className="mx-auto max-w-6xl px-4 py-16">
+        <div className="grid md:grid-cols-2 gap-10 items-start">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-semibold text-sky-800">Pyydä tarjous</h2>
+            <p className="mt-2 text-sky-700">
+              Kerro kohteesta lyhyesti – palaamme nopeasti. Voit myös soittaa suoraan päivystysnumeroon.
+            </p>
+            <form onSubmit={onSubmit} className="mt-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-sky-700">Nimi</label>
+                <Input placeholder="Etunimi Sukunimi" required />
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-sky-700">Sähköposti</label>
+                  <Input type="email" placeholder="nimi@yritys.fi" required />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-sky-700">Puhelin</label>
+                  <Input type="tel" placeholder="040 000 0000" />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-sky-700">Viesti</label>
+                <Textarea placeholder="Kuvaus työstä, osoite ja toivottu aikataulu" rows={6} required />
+              </div>
+              <Button type="submit" disabled={sending} className="w-full sm:w-auto bg-sky-600 hover:bg-sky-700">
+                {sending ? "Lähetetään…" : "Lähetä"}
+              </Button>
+            </form>
+          </div>
+
+          <div id="yhteys">
+            <h3 className="text-xl font-semibold text-sky-800">Yhteystiedot</h3>
+            <div className="mt-4 space-y-3 text-sky-700">
+              <p className="flex items-center gap-2"><Phone className="w-5 h-5" /> Puhelin: <a className="underline" href="tel:+358407733705">040 773 3705</a></p>
+              <p className="flex items-center gap-2"><Mail className="w-5 h-5" /> Sähköposti: <a className="underline" href="mailto:tammersahko@outlook.com">tammersahko@outlook.com</a></p>
+              <p>Y-tunnus: 3394920-4</p>
+            </div>
+            <Separator className="my-6" />
+            <h3 className="text-xl font-semibold text-sky-800">Seuraa</h3>
+            <div className="mt-4 flex gap-4">
+              <Button variant="outline" asChild className="border-sky-400 text-sky-700">
+                <a href="#" aria-label="Instagram">Instagram</a>
+              </Button>
+              <Button variant="outline" asChild className="border-sky-400 text-sky-700">
+                <a href="#" aria-label="Facebook">Facebook</a>
+              </Button>
+            </div>
+            <Card className="mt-6 border-sky-200/70 bg-white/80">
+              <CardHeader>
+                <CardTitle className="text-sky-800">Miksi TammerSähkö?</CardTitle>
+              </CardHeader>
+              <CardContent className="text-sky-700">
+                Luotettava sähköurakoitsija – laadukkaat asennukset ja nopea palvelu vuosien kokemuksella.
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-sky-200/60 bg-sky-50/80">
+        <div className="mx-auto max-w-6xl px-4 py-10 grid md:grid-cols-2 gap-6 items-center">
+          <div>
+            <div className="font-semibold text-lg text-sky-800">TammerSähkö</div>
+            <p className="text-sky-700 mt-1">Luotettava sähköurakoitsija – laadukkaat asennukset ja nopea palvelu.</p>
+          </div>
+          <div className="md:text-right text-sky-700">
+            <a className="underline" href="mailto:tammersahko@outlook.com">tammersahko@outlook.com</a> · <a className="underline" href="tel:+358407733705">040 773 3705</a>
+          </div>
+        </div>
+      </footer>
+
+      {/* Kelluva CTA mobiilille */}
+      <div className="fixed bottom-4 right-4 flex gap-2 md:hidden">
+        <Button asChild size="lg" className="bg-sky-600 hover:bg-sky-700">
+          <a href="#tarjous">Pyydä tarjous</a>
+        </Button>
+        <Button asChild size="lg" variant="outline" className="border-sky-400 text-sky-700">
+          <a href="tel:+358407733705">Soita</a>
+        </Button>
+      </div
